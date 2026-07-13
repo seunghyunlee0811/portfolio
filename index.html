@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<html lang="ko" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>이승현 — Cloud Engineer Portfolio</title>
+<meta name="description" content="클라우드 엔지니어 이승현의 포트폴리오. AWS, Kubernetes, IaC 기반 인프라 설계 및 운영.">
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/JetBrainsMono/2.304/jetbrains-mono.min.css">
+<style>
+:root, html[data-theme="dark"]{
+  --bg:#0a0a0a;
+  --bg-soft:#121212;
+  --bg-card:#181818;
+  --line:#2a2a2a;
+  --line-strong:#474747;
+  --fg:#ffffff;
+  --fg-dim:#c9c9c9;
+  --fg-mute:#8f8f8f;
+  --nav-bg:rgba(10,10,10,.85);
+  --mono:'JetBrains Mono',ui-monospace,monospace;
+  --sans:'Pretendard Variable',Pretendard,-apple-system,sans-serif;
+}
+html[data-theme="light"]{
+  --bg:#fafafa;
+  --bg-soft:#f1f1f1;
+  --bg-card:#ffffff;
+  --line:#dedede;
+  --line-strong:#b8b8b8;
+  --fg:#101010;
+  --fg-dim:#3c3c3c;
+  --fg-mute:#6e6e6e;
+  --nav-bg:rgba(250,250,250,.88);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--fg);
+  font-family:var(--sans);
+  line-height:1.65;
+  font-size:16px;
+  -webkit-font-smoothing:antialiased;
+  transition:background .3s,color .3s;
+}
+::selection{background:var(--fg);color:var(--bg)}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+
+/* language switch */
+html[lang="ko"] .en{display:none!important}
+html[lang="en"] .ko{display:none!important}
+
+/* ---------- nav ---------- */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  background:var(--nav-bg);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line);
+  transition:background .3s;
+}
+.nav-inner{
+  max-width:1080px;margin:0 auto;padding:0 24px;
+  height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px;
+}
+.nav-logo{font-family:var(--mono);font-size:14px;letter-spacing:.02em;white-space:nowrap}
+.nav-logo span{color:var(--fg-mute)}
+.nav-right{display:flex;align-items:center;gap:24px}
+.nav-links{display:flex;gap:26px;list-style:none}
+.nav-links a{
+  font-size:14px;font-weight:500;color:var(--fg-dim);
+  transition:color .2s;position:relative;
+}
+.nav-links a:hover{color:var(--fg)}
+.nav-links a.active{color:var(--fg)}
+.nav-links a.active::after{
+  content:'';position:absolute;left:0;right:0;bottom:-6px;
+  height:1px;background:var(--fg);
+}
+.nav-tools{display:flex;gap:8px}
+.tool-btn{
+  font-family:var(--mono);font-size:11.5px;font-weight:600;letter-spacing:.06em;
+  color:var(--fg-dim);background:transparent;
+  border:1px solid var(--line-strong);
+  padding:6px 12px;cursor:pointer;transition:all .2s;line-height:1;
+}
+.tool-btn:hover{color:var(--fg);border-color:var(--fg)}
+.menu-btn{
+  display:none;background:transparent;border:1px solid var(--line-strong);
+  color:var(--fg);cursor:pointer;padding:6px 10px;
+  font-family:var(--mono);font-size:14px;line-height:1;
+}
+
+/* ---------- hero ---------- */
+header{
+  min-height:100vh;display:flex;align-items:center;
+  border-bottom:1px solid var(--line);
+  background:
+    linear-gradient(var(--line) 1px,transparent 1px),
+    linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:72px 72px;
+  background-position:center;
+  position:relative;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse 70% 60% at 50% 45%,transparent 0%,var(--bg) 78%);
+  transition:background .3s;
+}
+.hero{position:relative;padding:120px 0 80px;width:100%}
+.hero-tag{
+  font-family:var(--mono);font-size:13px;color:var(--fg-dim);
+  display:inline-flex;align-items:center;gap:10px;
+  border:1px solid var(--line-strong);border-radius:999px;
+  padding:7px 16px;margin-bottom:36px;background:var(--bg);
+}
+.hero-tag::before{
+  content:'';width:7px;height:7px;border-radius:50%;
+  background:var(--fg);
+  animation:pulse 2.4s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+h1{
+  font-size:clamp(40px,8vw,84px);
+  font-weight:800;line-height:1.08;letter-spacing:-.03em;
+  margin-bottom:28px;
+}
+h1 .thin{color:var(--fg-mute);font-weight:300}
+.hero-desc{
+  font-size:18px;color:var(--fg-dim);max-width:580px;margin-bottom:36px;
+  word-break:keep-all;
+}
+.hero-desc strong{color:var(--fg);font-weight:700}
+.hero-loc{display:flex;align-items:center;gap:14px;margin-bottom:40px}
+.hero-loc svg{color:var(--fg-mute);flex-shrink:0}
+.hero-loc small{
+  display:block;font-family:var(--mono);font-size:11px;color:var(--fg-mute);
+  text-transform:uppercase;letter-spacing:.1em;margin-bottom:1px;
+}
+.hero-loc b{font-size:15.5px;font-weight:600;color:var(--fg)}
+.hero-actions{display:flex;gap:14px;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  font-size:15px;font-weight:600;padding:13px 26px;
+  border:1px solid var(--fg);transition:all .2s;
+}
+.btn-solid{background:var(--fg);color:var(--bg)}
+.btn-solid:hover{background:transparent;color:var(--fg)}
+.btn-ghost{border-color:var(--line-strong);color:var(--fg-dim)}
+.btn-ghost:hover{border-color:var(--fg);color:var(--fg)}
+.hero-meta{
+  margin-top:64px;display:flex;gap:0;flex-wrap:wrap;
+  border:1px solid var(--line);background:var(--bg-soft);
+}
+.hero-meta > div{
+  flex:1;min-width:150px;padding:20px 24px;
+  border-right:1px solid var(--line);
+  font-family:var(--mono);font-size:12.5px;color:var(--fg-mute);
+}
+.hero-meta > div:last-child{border-right:none}
+.hero-meta b{display:block;color:var(--fg);font-size:24px;font-weight:700;margin-bottom:2px}
+
+/* ---------- section base ---------- */
+section{padding:110px 0;border-bottom:1px solid var(--line)}
+.sec-head{display:flex;align-items:baseline;gap:18px;margin-bottom:20px}
+.sec-num{font-family:var(--mono);font-size:14px;color:var(--fg-mute)}
+.sec-title{font-size:clamp(28px,4vw,38px);font-weight:700;letter-spacing:-.02em}
+.sec-line{flex:1;height:1px;background:var(--line);align-self:center}
+.sec-sub{color:var(--fg-mute);font-size:15px;margin-bottom:48px}
+
+/* ---------- about ---------- */
+.about-grid{display:grid;grid-template-columns:1.4fr 1fr;gap:56px;margin-top:36px}
+.about-text p{color:var(--fg-dim);margin-bottom:20px;word-break:keep-all;font-size:16.5px}
+.about-text p strong{color:var(--fg)}
+.about-facts{border:1px solid var(--line);background:var(--bg-soft)}
+.fact{
+  display:flex;justify-content:space-between;align-items:center;gap:12px;
+  padding:17px 22px;border-bottom:1px solid var(--line);flex-wrap:wrap;
+}
+.fact:last-child{border-bottom:none}
+.fact dt{font-family:var(--mono);font-size:12px;color:var(--fg-mute);text-transform:uppercase;letter-spacing:.08em}
+.fact dd{font-size:14.5px;text-align:right;color:var(--fg)}
+
+/* ---------- skills (card grid — 한눈에) ---------- */
+.skills-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+  gap:20px;margin-top:36px;
+}
+.skill-card{
+  border:1px solid var(--line);background:var(--bg-soft);
+  padding:26px 24px;transition:border-color .25s,transform .25s;
+}
+.skill-card:hover{border-color:var(--line-strong);transform:translateY(-3px)}
+.skill-card h3{font-size:17px;font-weight:700;margin-bottom:3px}
+.skill-card > small{
+  display:block;font-family:var(--mono);font-size:11.5px;
+  color:var(--fg-mute);letter-spacing:.05em;margin-bottom:18px;
+}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{
+  font-family:var(--mono);font-size:12.5px;color:var(--fg-dim);
+  border:1px solid var(--line-strong);padding:6px 12px;
+  transition:all .2s;cursor:default;background:var(--bg);
+}
+.chip:hover{border-color:var(--fg);color:var(--fg)}
+.chip.core{background:var(--fg);color:var(--bg);border-color:var(--fg);font-weight:600}
+
+/* ---------- projects ---------- */
+.projects{display:flex;flex-direction:column;gap:28px;margin-top:36px}
+.proj{
+  border:1px solid var(--line);background:var(--bg-soft);
+  padding:36px 38px;transition:border-color .25s,background .25s;
+  position:relative;
+}
+.proj:hover{border-color:var(--line-strong);background:var(--bg-card)}
+.proj-top{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:10px;flex-wrap:wrap}
+.proj h3{font-size:21px;font-weight:700;letter-spacing:-.01em}
+.proj-period{font-family:var(--mono);font-size:12px;color:var(--fg-mute);white-space:nowrap;padding-top:6px}
+.proj-role{font-family:var(--mono);font-size:12.5px;color:var(--fg-dim);margin-bottom:16px}
+.proj-metrics{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:20px}
+.proj-metrics span{
+  font-family:var(--mono);font-size:12px;font-weight:600;
+  background:var(--fg);color:var(--bg);padding:5px 12px;
+}
+.proj-desc{color:var(--fg-dim);font-size:15.5px;word-break:keep-all;margin-bottom:20px;max-width:760px}
+.proj-points{list-style:none;margin-bottom:24px}
+.proj-points li{
+  color:var(--fg-dim);font-size:15px;padding:5px 0 5px 22px;position:relative;word-break:keep-all;
+}
+.proj-points li::before{
+  content:'—';position:absolute;left:0;color:var(--fg-mute);font-family:var(--mono);
+}
+.proj-points li b{color:var(--fg);font-weight:700}
+.proj-tags{display:flex;flex-wrap:wrap;gap:8px}
+.proj-tags span{
+  font-family:var(--mono);font-size:11.5px;color:var(--fg-mute);
+  border:1px solid var(--line);padding:4px 10px;
+}
+.proj-links{position:absolute;top:36px;right:38px;display:flex;gap:14px}
+.proj-links a{
+  font-family:var(--mono);font-size:12px;color:var(--fg-mute);
+  border-bottom:1px solid transparent;transition:all .2s;
+}
+.proj-links a:hover{color:var(--fg);border-color:var(--fg)}
+
+/* ---------- certs & edu (card형 — 한눈에) ---------- */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-top:36px}
+.col-label{
+  font-family:var(--mono);font-size:12px;color:var(--fg-mute);
+  text-transform:uppercase;letter-spacing:.12em;margin-bottom:18px;
+}
+.cred{
+  border:1px solid var(--line);background:var(--bg-soft);
+  padding:18px 22px;margin-bottom:12px;
+  display:flex;justify-content:space-between;align-items:center;gap:16px;
+  transition:border-color .2s;flex-wrap:wrap;
+}
+.cred:hover{border-color:var(--line-strong)}
+.cred b{display:block;font-size:15.5px;font-weight:700;line-height:1.4}
+.cred small{display:block;color:var(--fg-mute);font-size:13px;margin-top:2px}
+.cred-date{
+  font-family:var(--mono);font-size:12px;color:var(--fg-dim);
+  white-space:nowrap;border:1px solid var(--line-strong);padding:4px 10px;
+}
+
+/* ---------- contact ---------- */
+.contact{text-align:center;padding:130px 0}
+.contact h2{
+  font-size:clamp(32px,6vw,56px);font-weight:800;letter-spacing:-.03em;
+  margin-bottom:20px;
+}
+.contact p{color:var(--fg-dim);margin-bottom:44px;word-break:keep-all}
+.contact-links{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+
+/* ---------- footer ---------- */
+footer{
+  padding:28px 0;
+  font-family:var(--mono);font-size:12px;color:var(--fg-mute);
+}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px}
+
+/* ---------- reveal ---------- */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.on{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){
+  .reveal{opacity:1;transform:none;transition:none}
+  html{scroll-behavior:auto}
+}
+
+/* ---------- responsive ---------- */
+@media(max-width:860px){
+  .menu-btn{display:block}
+  .nav-links{
+    display:none;
+    position:absolute;top:60px;left:0;right:0;
+    flex-direction:column;gap:0;
+    background:var(--bg);border-bottom:1px solid var(--line);
+    padding:8px 0;
+  }
+  .nav-links.open{display:flex}
+  .nav-links li a{
+    display:block;padding:14px 24px;font-size:15px;
+  }
+  .nav-links a.active::after{display:none}
+  .about-grid,.two-col{grid-template-columns:1fr;gap:44px}
+  .proj{padding:26px 20px}
+  .proj-links{position:static;margin-bottom:14px}
+  section{padding:80px 0}
+  .hero{padding:100px 0 64px}
+}
+@media(max-width:480px){
+  .wrap{padding:0 18px}
+  body{font-size:15.5px}
+  .hero-desc{font-size:16.5px}
+  .hero-meta > div{min-width:100%;border-right:none;border-bottom:1px solid var(--line);padding:16px 20px}
+  .hero-meta > div:last-child{border-bottom:none}
+  .hero-actions .btn{flex:1;min-width:140px}
+  .contact-links .btn{width:100%}
+  .skills-grid{grid-template-columns:1fr}
+  .cred{flex-direction:column;align-items:flex-start;gap:10px}
+  .nav-logo span{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">LEE SEUNGHYUN<span> · cloud</span></a>
+    <div class="nav-right">
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#certs">Certifications</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-tools">
+        <button class="tool-btn" id="langBtn" aria-label="Switch language">EN</button>
+        <button class="tool-btn" id="themeBtn" aria-label="Toggle theme">LIGHT</button>
+        <button class="menu-btn" id="menuBtn" aria-label="Menu" aria-expanded="false">≡</button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap hero">
+    <div class="hero-tag">
+      <span class="ko">구직 중 — 클라우드 엔지니어</span>
+      <span class="en">OPEN TO WORK — CLOUD ENGINEER</span>
+    </div>
+    <h1>
+      <span class="ko">안정적인 인프라 위에<br><span class="thin">서비스가 자랍니다.</span></span>
+      <span class="en">Services grow on<br><span class="thin">stable infrastructure.</span></span>
+    </h1>
+    <p class="hero-desc">
+      <span class="ko">클라우드 엔지니어 <strong>이승현</strong>입니다.
+      AWS 기반 인프라 설계·구축부터 <strong>Kubernetes 운영, IaC 자동화</strong>까지 —
+      장애 없이 확장 가능한 시스템을 만드는 일에 집중합니다.</span>
+      <span class="en">I'm <strong>Seunghyun Lee</strong>, a cloud engineer.
+      From AWS infrastructure design to <strong>Kubernetes operations and IaC automation</strong> —
+      I focus on building scalable systems that never go down.</span>
+    </p>
+    <div class="hero-loc">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+      <div>
+        <small><span class="ko">현재 위치</span><span class="en">Currently in</span></small>
+        <b>Seoul, Korea</b>
+      </div>
+    </div>
+    <div class="hero-actions">
+      <a class="btn btn-solid" href="#projects"><span class="ko">프로젝트 보기</span><span class="en">View Projects</span></a>
+      <a class="btn btn-ghost" href="https://github.com/username" target="_blank" rel="noopener">GitHub ↗</a>
+    </div>
+    <div class="hero-meta">
+      <div><b>3+</b><span class="ko">인프라 구축 프로젝트</span><span class="en">Infrastructure projects</span></div>
+      <div><b>2</b><span class="ko">AWS 자격증</span><span class="en">AWS certifications</span></div>
+      <div><b>99.9%</b><span class="ko">목표 가용성 설계 경험</span><span class="en">Availability target designed</span></div>
+    </div>
+  </div>
+</header>
+
+<section id="about">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">01</span>
+      <h2 class="sec-title">About</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="about-grid">
+      <div class="about-text reveal">
+        <p>
+          <span class="ko"><strong>"인프라는 보이지 않을 때 가장 잘 작동한다"</strong>고 믿습니다.
+          사용자가 인프라의 존재를 느끼지 못하도록, 장애를 미리 설계 단계에서
+          제거하는 엔지니어가 되는 것이 목표입니다.</span>
+          <span class="en">I believe <strong>"infrastructure works best when it's invisible."</strong>
+          My goal is to be an engineer who eliminates failures at the design stage,
+          so users never notice the infrastructure at all.</span>
+        </p>
+        <p>
+          <span class="ko">클라우드 엔지니어링 과정에서 AWS 3-Tier 아키텍처 설계, Kubernetes 클러스터 구축,
+          Terraform 기반 IaC, CI/CD 파이프라인 자동화를 직접 수행했습니다.
+          단순히 "동작하는" 인프라가 아니라 <strong>비용·보안·가용성이 균형 잡힌</strong>
+          인프라를 설계하려 노력합니다.</span>
+          <span class="en">Through my cloud engineering training, I designed AWS 3-tier architectures,
+          built Kubernetes clusters, and automated infrastructure with Terraform and CI/CD pipelines.
+          I aim for infrastructure that is not merely "working" but
+          <strong>balanced across cost, security, and availability</strong>.</span>
+        </p>
+        <p>
+          <span class="ko">문서화를 중요하게 생각합니다. 모든 프로젝트의 아키텍처 다이어그램과
+          트러블슈팅 기록을 GitHub에 남기며, 같은 문제를 두 번 겪지 않는 팀을 만드는 데
+          기여하고 싶습니다.</span>
+          <span class="en">I value documentation. I keep architecture diagrams and troubleshooting
+          records for every project on GitHub, and I want to help build teams that
+          never face the same problem twice.</span>
+        </p>
+      </div>
+      <dl class="about-facts reveal">
+        <div class="fact"><dt>Name</dt><dd><span class="ko">이승현 (Lee Seunghyun)</span><span class="en">Seunghyun Lee</span></dd></div>
+        <div class="fact"><dt>Role</dt><dd>Cloud / Infra Engineer</dd></div>
+        <div class="fact"><dt>Location</dt><dd>Seoul, Korea</dd></div>
+        <div class="fact"><dt>Email</dt><dd>seunghyun.lee.it@gmail.com</dd></div>
+        <div class="fact"><dt>Education</dt><dd><span class="ko">클라우드 엔지니어링 부트캠프 수료</span><span class="en">Cloud Engineering Bootcamp</span></dd></div>
+        <div class="fact"><dt>Interest</dt><dd>DevOps · SRE · FinOps</dd></div>
+      </dl>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">02</span>
+      <h2 class="sec-title">Skills</h2>
+      <div class="sec-line"></div>
+    </div>
+    <p class="sec-sub reveal"><span class="ko">진하게 표시된 항목이 핵심 기술입니다</span><span class="en">Highlighted items are core skills</span></p>
+    <div class="skills-grid">
+      <div class="skill-card reveal">
+        <h3>Cloud</h3>
+        <small><span class="ko">AWS 중심 설계·구축</span><span class="en">AWS-CENTERED DESIGN</span></small>
+        <div class="chips">
+          <span class="chip core">AWS EC2</span><span class="chip core">VPC</span>
+          <span class="chip core">S3</span><span class="chip">RDS</span>
+          <span class="chip">Route 53</span><span class="chip">CloudFront</span>
+          <span class="chip">IAM</span><span class="chip">CloudWatch</span>
+          <span class="chip">Lambda</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>Container &amp; Orchestration</h3>
+        <small><span class="ko">배포 단위의 표준화</span><span class="en">STANDARDIZED DEPLOYMENT</span></small>
+        <div class="chips">
+          <span class="chip core">Docker</span><span class="chip core">Kubernetes</span>
+          <span class="chip">EKS</span><span class="chip">Helm</span>
+          <span class="chip">Docker Compose</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>IaC &amp; CI/CD</h3>
+        <small><span class="ko">반복 작업의 자동화</span><span class="en">AUTOMATION</span></small>
+        <div class="chips">
+          <span class="chip core">Terraform</span><span class="chip core">GitHub Actions</span>
+          <span class="chip">Ansible</span><span class="chip">Jenkins</span>
+          <span class="chip">ArgoCD</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>OS &amp; Language</h3>
+        <small><span class="ko">기반 기술</span><span class="en">FOUNDATIONS</span></small>
+        <div class="chips">
+          <span class="chip core">Linux (Ubuntu/RHEL)</span><span class="chip">Bash</span>
+          <span class="chip">Python</span><span class="chip">Git</span>
+          <span class="chip">Nginx</span><span class="chip">MySQL</span>
+        </div>
+      </div>
+      <div class="skill-card reveal">
+        <h3>Monitoring</h3>
+        <small><span class="ko">관측 가능성 확보</span><span class="en">OBSERVABILITY</span></small>
+        <div class="chips">
+          <span class="chip">Prometheus</span><span class="chip">Grafana</span>
+          <span class="chip">CloudWatch</span><span class="chip">ELK Stack</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">03</span>
+      <h2 class="sec-title">Projects</h2>
+      <div class="sec-line"></div>
+    </div>
+    <p class="sec-sub reveal"><span class="ko">설계 의도와 개선 수치를 함께 기록했습니다</span><span class="en">Documented with design intent and measurable results</span></p>
+    <div class="projects">
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3><span class="ko">AWS 3-Tier 고가용성 웹 서비스 인프라 구축</span><span class="en">AWS 3-Tier High-Availability Web Infrastructure</span></h3>
+          <span class="proj-period">2026.03 — 2026.05</span>
+        </div>
+        <div class="proj-links"><a href="#" target="_blank" rel="noopener">GitHub ↗</a><a href="#" target="_blank" rel="noopener">Docs ↗</a></div>
+        <p class="proj-role"><span class="ko">팀 프로젝트 (4인) · 인프라 설계 및 IaC 담당</span><span class="en">Team of 4 · Infrastructure design &amp; IaC</span></p>
+        <div class="proj-metrics">
+          <span><span class="ko">가용성 99.9% 설계</span><span class="en">99.9% availability</span></span>
+          <span><span class="ko">구축 4h → 15m</span><span class="en">Provisioning 4h → 15m</span></span>
+        </div>
+        <p class="proj-desc">
+          <span class="ko">Multi-AZ 기반 3-Tier 아키텍처를 설계하고 Terraform으로 전체 인프라를 코드화한 프로젝트.
+          단일 장애점(SPOF)을 제거하고 트래픽 급증 상황에서도 서비스가 유지되도록 설계했습니다.</span>
+          <span class="en">Designed a Multi-AZ three-tier architecture and codified the entire infrastructure
+          with Terraform, eliminating single points of failure and sustaining traffic spikes.</span>
+        </p>
+        <ul class="proj-points">
+          <li><span class="ko">ALB + Auto Scaling Group으로 <b>가용성 99.9% 목표 아키텍처</b> 설계, 부하 테스트로 검증</span><span class="en">Designed a <b>99.9% availability target architecture</b> with ALB + Auto Scaling, verified via load testing</span></li>
+          <li><span class="ko">Terraform 모듈화로 dev/prod 환경 분리 — <b>인프라 구축 시간 4시간 → 15분</b> 단축</span><span class="en">Separated dev/prod with Terraform modules — <b>provisioning time cut from 4 hours to 15 minutes</b></span></li>
+          <li><span class="ko">NAT Gateway·보안그룹 최소 권한 구성으로 프라이빗 서브넷 격리, IAM 정책 최소화</span><span class="en">Isolated private subnets with least-privilege security groups and minimal IAM policies</span></li>
+          <li><span class="ko">CloudWatch 대시보드 + SNS 알람으로 장애 감지 자동화</span><span class="en">Automated failure detection with CloudWatch dashboards + SNS alarms</span></li>
+        </ul>
+        <div class="proj-tags">
+          <span>AWS</span><span>Terraform</span><span>ALB</span><span>Auto Scaling</span><span>RDS Multi-AZ</span><span>CloudWatch</span>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3><span class="ko">Kubernetes 기반 MSA 배포 파이프라인 구축</span><span class="en">Kubernetes-Based MSA Deployment Pipeline</span></h3>
+          <span class="proj-period">2026.05 — 2026.06</span>
+        </div>
+        <div class="proj-links"><a href="#" target="_blank" rel="noopener">GitHub ↗</a></div>
+        <p class="proj-role"><span class="ko">팀 프로젝트 (3인) · CI/CD 파이프라인 및 클러스터 운영 담당</span><span class="en">Team of 3 · CI/CD pipeline &amp; cluster operations</span></p>
+        <div class="proj-metrics">
+          <span><span class="ko">배포 20m → 3m</span><span class="en">Deploy 20m → 3m</span></span>
+          <span><span class="ko">무중단 배포</span><span class="en">Zero-downtime</span></span>
+        </div>
+        <p class="proj-desc">
+          <span class="ko">마이크로서비스 애플리케이션을 EKS 클러스터에 배포하고, GitHub Actions와 ArgoCD로
+          GitOps 기반 CI/CD 파이프라인을 구축한 프로젝트.</span>
+          <span class="en">Deployed a microservices application to an EKS cluster and built a
+          GitOps-based CI/CD pipeline with GitHub Actions and ArgoCD.</span>
+        </p>
+        <ul class="proj-points">
+          <li><span class="ko">GitHub Actions → ECR → ArgoCD로 이어지는 <b>GitOps 파이프라인</b> 구축, 배포 소요 20분 → 3분</span><span class="en">Built a <b>GitOps pipeline</b> (GitHub Actions → ECR → ArgoCD), reducing deploy time from 20 to 3 minutes</span></li>
+          <li><span class="ko">Helm Chart로 서비스별 배포 템플릿 표준화, Rolling Update로 무중단 배포 구현</span><span class="en">Standardized deployment templates with Helm charts, achieved zero-downtime rolling updates</span></li>
+          <li><span class="ko">HPA(Horizontal Pod Autoscaler) 적용 — 부하 테스트에서 <b>Pod 자동 확장 검증</b></span><span class="en">Applied HPA — <b>verified automatic pod scaling</b> under load testing</span></li>
+          <li><span class="ko">Prometheus + Grafana로 클러스터·서비스 메트릭 모니터링 대시보드 구성</span><span class="en">Built cluster and service metric dashboards with Prometheus + Grafana</span></li>
+        </ul>
+        <div class="proj-tags">
+          <span>Kubernetes</span><span>EKS</span><span>ArgoCD</span><span>Helm</span><span>GitHub Actions</span><span>Prometheus</span>
+        </div>
+      </article>
+
+      <article class="proj reveal">
+        <div class="proj-top">
+          <h3><span class="ko">온프레미스 → AWS 마이그레이션 시뮬레이션</span><span class="en">On-Premises → AWS Migration Simulation</span></h3>
+          <span class="proj-period">2026.02 — 2026.03</span>
+        </div>
+        <div class="proj-links"><a href="#" target="_blank" rel="noopener">GitHub ↗</a></div>
+        <p class="proj-role"><span class="ko">개인 프로젝트 · 설계부터 비용 분석까지 단독 수행</span><span class="en">Solo project · From design to cost analysis</span></p>
+        <div class="proj-metrics">
+          <span><span class="ko">월 비용 32% 절감안</span><span class="en">32% cost reduction</span></span>
+          <span><span class="ko">다운타임 최소화(CDC)</span><span class="en">Minimal downtime (CDC)</span></span>
+        </div>
+        <p class="proj-desc">
+          <span class="ko">VirtualBox 기반 온프레미스 환경(웹·DB 서버)을 가정하고 AWS로 이전하는 전체 과정을
+          시뮬레이션. 마이그레이션 전략 수립과 비용 최적화에 집중했습니다.</span>
+          <span class="en">Simulated a full migration of a VirtualBox-based on-premises environment
+          (web and DB servers) to AWS, focusing on migration strategy and cost optimization.</span>
+        </p>
+        <ul class="proj-points">
+          <li><span class="ko">DMS를 활용한 DB 마이그레이션 — <b>다운타임 최소화 전략(CDC)</b> 적용 및 문서화</span><span class="en">DB migration with DMS — applied and documented a <b>minimal-downtime (CDC) strategy</b></span></li>
+          <li><span class="ko">Savings Plan·Reserved Instance 비교 분석으로 <b>월 예상 비용 32% 절감안</b> 도출</span><span class="en">Derived a <b>32% monthly cost reduction plan</b> by comparing Savings Plans and Reserved Instances</span></li>
+          <li><span class="ko">마이그레이션 체크리스트·롤백 시나리오를 포함한 운영 문서 작성</span><span class="en">Wrote operational docs including migration checklists and rollback scenarios</span></li>
+        </ul>
+        <div class="proj-tags">
+          <span>AWS DMS</span><span>EC2</span><span>RDS</span><span>Cost Optimization</span><span>Linux</span>
+        </div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<section id="certs">
+  <div class="wrap">
+    <div class="sec-head reveal">
+      <span class="sec-num">04</span>
+      <h2 class="sec-title">Certifications &amp; Education</h2>
+      <div class="sec-line"></div>
+    </div>
+    <div class="two-col">
+      <div class="reveal">
+        <div class="col-label">Certifications</div>
+        <div class="cred">
+          <div>
+            <b><span class="ko">네트워크관리사 (NCA)</span><span class="en">Network Administrator (NCA)</span></b>
+            <small><span class="ko">한국정보통신진흥협회</span><span class="en">KAIT</span></small>
+          </div>
+          <span class="cred-date">2026.06.19</span>
+        </div>
+        <div class="cred">
+          <div>
+            <b><span class="ko">네트워크관리사 (NCP)</span><span class="en">Network Administrator (NCP)</span></b>
+            <small><span class="ko">한국정보통신진흥협회</span><span class="en">KAIT</span></small>
+          </div>
+          <span class="cred-date">2026.07.09</span>
+        </div>
+      </div>
+      <div class="reveal">
+        <div class="col-label">Education</div>
+        <div class="cred">
+          <div>
+            <b><span class="ko">클라우드 엔지니어링 전문가 양성과정</span><span class="en">Cloud Engineering Professional Program</span></b>
+            <small><span class="ko">○○교육기관 · AWS/K8s/IaC 실무 프로젝트 중심 900시간</span><span class="en">○○ Institute · 900 hrs of hands-on AWS/K8s/IaC projects</span></small>
+          </div>
+          <span class="cred-date">2025.12 — 2026.06</span>
+        </div>
+        <div class="cred">
+          <div>
+            <b><span class="ko">중앙대학교 경제학부 졸업</span><span class="en">B.A. in Economics, Chung-Ang University</span></b>
+            <small><span class="ko">학사</span><span class="en">Bachelor's degree</span></small>
+          </div>
+          <span class="cred-date">2019.03 — 2025.08</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact" style="border-bottom:none">
+  <div class="wrap">
+    <div class="reveal">
+      <h2>
+        <span class="ko">함께 일할 준비가<br>되어 있습니다.</span>
+        <span class="en">Ready to work<br>together.</span>
+      </h2>
+      <p><span class="ko">포지션 제안, 프로젝트 문의 모두 환영합니다. 24시간 내에 답장드립니다.</span><span class="en">Open to position offers and project inquiries. I reply within 24 hours.</span></p>
+      <div class="contact-links">
+        <a class="btn btn-solid" href="mailto:seunghyun.lee.it@gmail.com"><span class="ko">이메일 보내기</span><span class="en">Send Email</span></a>
+        <a class="btn btn-ghost" href="https://github.com/username" target="_blank" rel="noopener">GitHub ↗</a>
+        <a class="btn btn-ghost" href="https://linkedin.com/in/username" target="_blank" rel="noopener">LinkedIn ↗</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 Lee Seunghyun</span>
+    <span>Built with plain HTML/CSS — hosted on GitHub Pages</span>
+  </div>
+</footer>
+
+<script>
+const root=document.documentElement;
+const store={
+  get(k){try{return localStorage.getItem(k)}catch(e){return null}},
+  set(k,v){try{localStorage.setItem(k,v)}catch(e){}}
+};
+
+// theme toggle (button shows the mode you'll switch to)
+const themeBtn=document.getElementById('themeBtn');
+function setTheme(t){
+  root.setAttribute('data-theme',t);
+  themeBtn.textContent=t==='dark'?'LIGHT':'DARK';
+  store.set('theme',t);
+}
+setTheme(store.get('theme')||'dark');
+themeBtn.addEventListener('click',()=>setTheme(root.getAttribute('data-theme')==='dark'?'light':'dark'));
+
+// language toggle (button shows the language you'll switch to)
+const langBtn=document.getElementById('langBtn');
+function setLang(l){
+  root.setAttribute('lang',l);
+  langBtn.textContent=l==='ko'?'EN':'KO';
+  store.set('lang',l);
+}
+setLang(store.get('lang')||'ko');
+langBtn.addEventListener('click',()=>setLang(root.getAttribute('lang')==='ko'?'en':'ko'));
+
+// mobile menu
+const menuBtn=document.getElementById('menuBtn');
+const navLinks=document.getElementById('navLinks');
+menuBtn.addEventListener('click',()=>{
+  const open=navLinks.classList.toggle('open');
+  menuBtn.setAttribute('aria-expanded',open);
+  menuBtn.textContent=open?'✕':'≡';
+});
+navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{
+  navLinks.classList.remove('open');
+  menuBtn.setAttribute('aria-expanded','false');
+  menuBtn.textContent='≡';
+}));
+
+// scroll reveal
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); io.unobserve(e.target);} });
+},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+// active nav highlight
+const links=[...document.querySelectorAll('.nav-links a')];
+const secs=links.map(a=>document.querySelector(a.getAttribute('href')));
+const navIO=new IntersectionObserver(es=>{
+  es.forEach(e=>{
+    if(e.isIntersecting){
+      links.forEach(l=>l.classList.toggle('active',l.getAttribute('href')==='#'+e.target.id));
+    }
+  });
+},{rootMargin:'-40% 0px -55% 0px'});
+secs.forEach(s=>s&&navIO.observe(s));
+</script>
+</body>
+</html>
